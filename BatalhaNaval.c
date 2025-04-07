@@ -30,6 +30,22 @@ int main() {
     
     // vetores para as coordenadas dos navios
     int navio1H[2], navio2V[2], navio3D[2], navio4D[2];
+    //Matrizes de Habilidade
+    int octaedro[3][3] = {
+        {0, 1, 0},
+        {1, 1, 1},
+        {0, 1, 0}
+    };
+    int cone[3][5] = {
+        {0, 0, 1, 0, 0},
+        {0, 1, 1, 1, 0},
+        {1, 1, 1, 1, 1}
+    };
+    int cruz[3][5] ={
+        {0, 0, 1, 0, 0},
+        {1, 1, 1, 1, 1},
+        {0, 0, 1, 0, 0}
+    };
 
     ImprimirTabuleiro(tabuleiro);
 
@@ -141,6 +157,35 @@ int main() {
         }
     } else {
         printf("Você escolheu um valor inválido!!!\n");
+    }
+
+    ImprimirTabuleiro(tabuleiro);
+    printf("\nVamos ver se o seu navio sobreviveu! Algumas áreas foram atacadas.\n");
+
+    int linha = 0, linha2 = 0;
+    for (int i = 0; i < 10; i++){           //Percorre as linhas
+        for (int j = 0; j < 10; j++)        //Percorre as colunas
+        {
+            if(i > 0 && i < 4){             //Posiciona a matriz do cone no tabuleiro
+                tabuleiro[i][j] = cone[linha][j];
+                if(j == 4) {
+                    linha++;
+                    break;
+                }
+            }  
+            if(i > 3 && i < 7){             //Posiciona a matriz da cruz no tabuleiro
+                if(j > 4){
+                    tabuleiro[i][j] = cruz[(linha - 3)][(j - 5)];
+                    if(j == 9) linha++;
+                }
+            }  
+            if(i > 5 && i < 9){             //Posiciona a matriz do octaedro no tabuleiro
+                if(j > 1 && j < 5){
+                    tabuleiro[i][j] = octaedro[linha2][j - 2];
+                    if(j == 4) linha2++;
+                }
+            }
+        }
     }
 
     ImprimirTabuleiro(tabuleiro);
